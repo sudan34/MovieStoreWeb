@@ -20,7 +20,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
-
+builder.Services.AddScoped<IGenreService, GenreService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

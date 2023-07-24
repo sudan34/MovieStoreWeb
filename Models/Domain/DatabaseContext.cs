@@ -9,5 +9,9 @@ namespace MovieStoreWeb.Models.Domain
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
+
+        public DbSet<Movie> Movie { get; set; }
+        public DbSet<Genre> Genre { get; set; }
+        public DbSet<MovieGenre> MoviesGenre { get; set;}
     }
 }

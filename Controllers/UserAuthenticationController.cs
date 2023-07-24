@@ -14,7 +14,7 @@ namespace MovieStoreWeb.Controllers
             _authenticationService = authenticationService;
         }
 
-        public async Task<IActionResult> Register()
+       /* public async Task<IActionResult> Register()
         {
             var model = new RegistrationModel
             {
@@ -27,7 +27,7 @@ namespace MovieStoreWeb.Controllers
             };
             var result = await _authenticationService.RegisterAsync(model);
             return View(result.Message);
-        }
+        }*/
         public async Task<IActionResult> Login()
         {
             return View();
