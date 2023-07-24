@@ -21,6 +21,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IFileServices, FileServices>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
