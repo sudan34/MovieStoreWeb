@@ -11,6 +11,6 @@ namespace MovieStoreWeb.Repositories.Abstract
         Movie GetById(int id);
         bool Delete(int id);
         MovieListVm List();
-        IEnumerable GetGenreByMovieId(int id);
+        IEnumerable GetGenreByMovieId(int movieId);
     }
 }

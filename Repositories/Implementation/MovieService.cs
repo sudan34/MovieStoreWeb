@@ -1,6 +1,7 @@
 ﻿using MovieStoreWeb.Models.Domain;
 using MovieStoreWeb.Models.DTO;
 using MovieStoreWeb.Repositories.Abstract;
+using System.Collections;
 
 namespace MovieStoreWeb.Repositories.Implementation
 {
@@ -68,13 +69,28 @@ namespace MovieStoreWeb.Repositories.Implementation
             return _context.Movie.Find(id);
         }
 
+        public IEnumerable GetGenreByMovieId(int movieId)
+        {
+            var genreIds = _context.MoviesGenre.Where(a => a.MovieId == movieId).Select(a => a.GenreId).ToList();
+            return genreIds;
+        }
+
         public MovieListVm List()
         {
-            var list = _context.Movie.AsQueryable();
-            var data = new MovieListVm
+            var data = new MovieListVm();
+            var list = _context.Movie.ToList();
+            foreach (var movie in list)
             {
-                MovieList = list
-            };
+                var genres = (from genre in _context.Genre
+                              join mg in _context.MoviesGenre
+                              on genre.Id equals mg.GenreId
+                              where mg.MovieId == movie.Id
+                              select genre.GenreName
+                                   ).ToList();
+                var genreNames = string.Join(',', genres);
+                movie.GenreNames = genreNames;
+            }
+            data.MovieList = list.AsQueryable();
             return data;
         }
 

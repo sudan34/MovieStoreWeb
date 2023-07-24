@@ -27,6 +27,13 @@
             <option value="">--select--</option>
         </select>
     </div>
+
+    @*<div class="input-container">
+        <label asp-for="Genres" class="w-40">Genre</label>
+        <select asp-items="Model.MultiGenreList" class="input" asp-for="Genres" multiple>
+            <option value="">--select--</option>
+        </select>
+    </div>*@
     <div class="message-box pd-x-28 error">
         <span asp-validation-for="Genres"> </span>
     </div>

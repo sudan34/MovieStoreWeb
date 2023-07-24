@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MovieStoreWeb.Models.Domain;
 using MovieStoreWeb.Models.DTO;
@@ -6,6 +7,7 @@ using MovieStoreWeb.Repositories.Abstract;
 
 namespace MovieStoreWeb.Controllers
 {
+    [Authorize]
     public class MovieController : Controller
     {
         private readonly IMovieService _movieService;
@@ -21,7 +23,9 @@ namespace MovieStoreWeb.Controllers
 
         public IActionResult Add()
         {
-            return View();
+            var model = new Movie();
+            model.GenreList = _genService.List().Select(a => new SelectListItem { Text = a.GenreName, Value = a.Id.ToString() });
+            return View(model);
         }
         [HttpPost]
         public IActionResult Add(Movie model)
