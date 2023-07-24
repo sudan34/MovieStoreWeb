@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieStoreWeb.Models.Domain;
 using MovieStoreWeb.Repositories.Abstract;
 
 namespace MovieStoreWeb.Controllers
 {
+    [Authorize]
     public class GenreController : Controller
     {
         private readonly IGenreService _genreService;
@@ -20,7 +22,7 @@ namespace MovieStoreWeb.Controllers
         [HttpPost]
         public IActionResult Add(Genre model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
             var result = _genreService.Add(model);
             if (result)
