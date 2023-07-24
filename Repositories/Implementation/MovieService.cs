@@ -2,6 +2,7 @@
 using MovieStoreWeb.Models.DTO;
 using MovieStoreWeb.Repositories.Abstract;
 using System.Collections;
+using System.Net.NetworkInformation;
 
 namespace MovieStoreWeb.Repositories.Implementation
 {
@@ -69,16 +70,32 @@ namespace MovieStoreWeb.Repositories.Implementation
             return _context.Movie.Find(id);
         }
 
-        public IEnumerable GetGenreByMovieId(int movieId)
+        public List<int> GetGenreByMovieId(int movieId)
         {
             var genreIds = _context.MoviesGenre.Where(a => a.MovieId == movieId).Select(a => a.GenreId).ToList();
             return genreIds;
         }
 
-        public MovieListVm List()
+        public MovieListVm List(string term = "", bool paging = false, int currentPage = 0)
         {
             var data = new MovieListVm();
             var list = _context.Movie.ToList();
+            if (!string.IsNullOrEmpty(term))
+            {
+                term = term.ToLower();
+                list = list.Where(a => a.Title.ToLower().StartsWith(term)).ToList();
+            }
+            if (paging)
+            {
+                // here we will apply paging
+                int pageSize = 5;
+                int count = list.Count;
+                int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+                list = list.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+                data.PageSize = pageSize;
+                data.CurrentPage = currentPage;
+                data.TotalPages = TotalPages;
+            }
             foreach (var movie in list)
             {
                 var genres = (from genre in _context.Genre
