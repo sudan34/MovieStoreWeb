@@ -1,5 +1,6 @@
 ﻿using MovieStoreWeb.Models.Domain;
 using MovieStoreWeb.Models.DTO;
+using System.Collections;
 
 namespace MovieStoreWeb.Repositories.Abstract
 {
@@ -10,6 +11,6 @@ namespace MovieStoreWeb.Repositories.Abstract
         Movie GetById(int id);
         bool Delete(int id);
         MovieListVm List();
-
+        IEnumerable GetGenreByMovieId(int id);
     }
 }
